@@ -113,7 +113,40 @@ function system_solver(Matriz, vetor, method)
 
     return results_vec
 end
-#=
+
+function quadratic_norm(vetor)
+    n = length(vetor)
+    acumulador = 0
+    for i in 1:n
+        acumulador += vetor[i]^2
+    end
+    return acumulador^0.5
+end
+
+function jacobi_method(Matriz, vector, tol)
+    (n,m) = size(Matriz)
+    erro = Inf
+    first_vec = ones(1, n)
+    while erro >= tol
+        iter_vec = ones(1, n)
+        for i in 1:n
+            acumula = 0
+            for j in 1:n
+                if i == j
+                    continue
+                else
+                    acumula += Matriz[i,j]*first_vec[j]
+                end
+            end
+            iter_vec[i] = (vector[i] - acumula)/Matriz[i,i]
+        end
+        dif =  first_vec - iter_vec
+        erro = quadratic_norm(dif)/quadratic_norm(iter_vec)
+        first_vec = iter_vec
+    end
+    return first_vec
+end
+    #=
 matriz=[4.0 12.0 -16.0 
         12.0 37.0 -43.0 
         -16.0 -43.0 98.0]
