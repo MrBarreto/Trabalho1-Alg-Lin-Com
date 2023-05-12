@@ -146,7 +146,32 @@ function jacobi_method(Matriz, vector, tol)
     end
     return first_vec
 end
-    #=
+
+function gauss_seidel(Matriz, vector, tol)
+    (n,m) = size(Matriz)
+    erro = Inf
+    first_vec = ones(1, n)
+    while erro >= tol
+        iter_vec = ones(1, n)
+        for i in 1:n
+            acumula = 0
+            acumula2 = 0
+            for j in 1:i-1
+                acumula += Matriz[i,j]*iter_vec[j]
+            end
+            for j in i+1:n
+                acumula2 += Matriz[i,j]*first_vec[j]
+            end
+            iter_vec[i] = (vector[i] - acumula -acumula2)/Matriz[i,i]
+        end
+        dif =  first_vec - iter_vec
+        erro = quadratic_norm(dif)/quadratic_norm(iter_vec)
+        first_vec = iter_vec
+    end
+    return first_vec
+end
+ 
+#=
 matriz=[4.0 12.0 -16.0 
         12.0 37.0 -43.0 
         -16.0 -43.0 98.0]
