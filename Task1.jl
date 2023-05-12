@@ -170,13 +170,3 @@ function gauss_seidel(Matriz, vector, tol)
     end
     return first_vec
 end
- 
-#=
-matriz=[4.0 12.0 -16.0 
-        12.0 37.0 -43.0 
-        -16.0 -43.0 98.0]
-b = [3,6,10]
-matriz = LU_decomposition(matriz)
-resultado = system_solver(matriz, b)
-print("$resultado")
-=#
